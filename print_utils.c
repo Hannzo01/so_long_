@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kemzouri <kemzouri@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/25 20:26:10 by kemzouri          #+#    #+#             */
+/*   Updated: 2025/03/26 00:18:50 by kemzouri         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
 void	ft_putstr_fd(char *s, int fd)
@@ -9,7 +21,7 @@ void	ft_putstr_fd(char *s, int fd)
 	i = 0;
 	while (s[i] != '\0')
 	{
-		write (fd, &s[i], 1);
+		write(fd, &s[i], 1);
 		i++;
 	}
 }
@@ -34,9 +46,44 @@ int	ft_strln(char *str)
 {
 	int	i;
 
+	if (!str)
+		return (-1);
 	i = 0;
 	while (str[i] != '\0')
 		i++;
 	return (i);
 }
 
+char	*ft_strdupp(char *s)
+{
+	int		i;
+	char	*p;
+
+	i = 0;
+	while (s[i])
+		i++;
+	p = (char *)malloc(sizeof(char) * (i + 1));
+	if (p == NULL)
+		return (NULL);
+	i = 0;
+	while (s[i])
+	{
+		p[i] = s[i];
+		i++;
+	}
+	p[i] = '\0';
+	return (p);
+}
+
+void	free_2d_array(char **map)
+{
+	int	i;
+
+	i = 0;
+	while (map[i] != NULL)
+	{
+		free(map[i]);
+		i++;
+	}
+	free(map);
+}
