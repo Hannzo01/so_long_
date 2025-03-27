@@ -6,7 +6,7 @@
 /*   By: kemzouri <kemzouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:26:02 by kemzouri          #+#    #+#             */
-/*   Updated: 2025/03/25 23:56:00 by kemzouri         ###   ########.fr       */
+/*   Updated: 2025/03/26 20:33:57 by kemzouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 # define SO_LONG_H
 
 # include "gnl/get_next_line.h"
-# include <stdio.h>
+# include <stdio.h> 
+#	include <mlx.h>
 # include <stdlib.h>
 # include <unistd.h>
-
+# define TILE_SIZE 64
 typedef struct s_map
 {
 	char	**map;
@@ -25,6 +26,7 @@ typedef struct s_map
 	int		x;
 	int		y;
 	int		height;
+	int		width;
 	int		len;
 	int		collectibles;
 	int		p;
@@ -33,6 +35,10 @@ typedef struct s_map
 	int		e;
 	int		ff_c;
 	int		ff_e;
+	int		win_height;
+	int		win_width;
+	void	*mlx;
+	void	*mlx_window;
 }			t_map;
 
 int			ft_strln(char *str);
@@ -53,5 +59,14 @@ int			valid_characters(t_map *game);
 void		clone_map(t_map *game);
 void		flood_fill(t_map *game, int x, int y);
 int			ff_validity(t_map *game);
+
+
+void	display_window(t_map *game);
+void	game_load(t_map *game);
+void	ft_free(t_map *game);
+void	handle_events(t_map *game);
+
+
+
 
 #endif

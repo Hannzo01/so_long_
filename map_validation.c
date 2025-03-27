@@ -6,7 +6,7 @@
 /*   By: kemzouri <kemzouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 21:26:28 by kemzouri          #+#    #+#             */
-/*   Updated: 2025/03/26 01:00:00 by kemzouri         ###   ########.fr       */
+/*   Updated: 2025/03/26 17:59:09 by kemzouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,15 @@ int	check_map_shape(t_map *game)
 {
 	int	i;
 	int	j;
-	int	len;
 
 	i = 0;
-	len = ft_strln(game->map[i]);
+	game->width = ft_strln(game->map[i]);
 	while (game->map[i] != NULL)
 	{
 		j = 0;
 		while (game->map[i][j] != '\0')
 			j++;
-		if (j != len)
+		if (j != game->width)
 		{
 			ft_putstr_fd("Error\nMap is not rectangular || empty lines!\n", 2);
 			return (0);
@@ -49,8 +48,6 @@ int	check_map_shape(t_map *game)
 		i++;
 	}
 	i--;
-	if (game->map[i][0] == '\0')
-		printf("toz\n");
 	if (i == 1)
 		return (ft_putstr_fd("Error\nMap is too small to be valid!\n", 2), 0);
 	return (1);
