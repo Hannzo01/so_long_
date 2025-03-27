@@ -6,7 +6,7 @@
 /*   By: kemzouri <kemzouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 21:26:28 by kemzouri          #+#    #+#             */
-/*   Updated: 2025/03/26 17:59:09 by kemzouri         ###   ########.fr       */
+/*   Updated: 2025/03/27 17:23:42 by kemzouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ int	is_map_surrounded(t_map *game)
 			if (j == 0 || j == game->len - 1)
 			{
 				if (game->map[i][j] != '1')
-					return (ft_putstr_fd("Error\nMap with walls error!\n", 2)
-						, 0);
+					return (ft_putstr_fd("Error\nMap with walls error!\n", 2),
+						0);
 			}
 			j++;
 		}

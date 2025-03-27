@@ -6,7 +6,7 @@
 /*   By: kemzouri <kemzouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 15:57:46 by kemzouri          #+#    #+#             */
-/*   Updated: 2025/03/27 01:04:06 by kemzouri         ###   ########.fr       */
+/*   Updated: 2025/03/27 18:30:33 by kemzouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,18 @@ void	init_images(t_map *game)
 	game->image_height = 64;
 	game->image_width = 64;
 	game->p_image = mlx_xpm_file_to_image(game->mlx, "./textures/player.xpm",
-		 &game->image_width, &game->image_height);
-	game->d_image = mlx_xpm_file_to_image(game->mlx, "./textures/door.xpm", &game->image_width, &game->image_height);
-	game->f_image = mlx_xpm_file_to_image(game->mlx, "./textures/floor.xpm", &game->image_width, &game->image_height);
-	game->c_image = mlx_xpm_file_to_image(game->mlx, "./textures/collectibles.xpm", &game->image_width, &game->image_height);
-	game->w_image = mlx_xpm_file_to_image(game->mlx, "./textures/wall.xpm", &game->image_width, &game->image_height);
-    if (game->p_image == NULL || game->d_image == NULL || game->f_image == NULL || 
-        game->c_image == NULL || game->w_image == NULL)
+			&game->image_width, &game->image_height);
+	game->d_image = mlx_xpm_file_to_image(game->mlx, "./textures/door.xpm",
+			&game->image_width, &game->image_height);
+	game->f_image = mlx_xpm_file_to_image(game->mlx, "./textures/floor.xpm",
+			&game->image_width, &game->image_height);
+	game->c_image = mlx_xpm_file_to_image(game->mlx,
+			"./textures/collectibles.xpm", &game->image_width,
+			&game->image_height);
+	game->w_image = mlx_xpm_file_to_image(game->mlx, "./textures/wall.xpm",
+			&game->image_width, &game->image_height);
+	if (game->p_image == NULL || game->d_image == NULL || game->f_image == NULL
+		|| game->c_image == NULL || game->w_image == NULL)
 	{
 		ft_free_images(game);
 		return ;
@@ -37,11 +42,11 @@ void	ft_free_images(t_map *game)
 	if (game->p_image != NULL)
 		mlx_destroy_image(game->mlx, game->p_image);
 	if (game->f_image != NULL)
-        mlx_destroy_image(game->mlx, game->f_image);
-    if (game->c_image != NULL)
-        mlx_destroy_image(game->mlx, game->c_image);
-    if (game->w_image != NULL)
-        mlx_destroy_image(game->mlx, game->w_image);
+		mlx_destroy_image(game->mlx, game->f_image);
+	if (game->c_image != NULL)
+		mlx_destroy_image(game->mlx, game->c_image);
+	if (game->w_image != NULL)
+		mlx_destroy_image(game->mlx, game->w_image);
 }
 
 void	display_images(t_map *game)
@@ -56,26 +61,48 @@ void	display_images(t_map *game)
 		while (game->map[i][j] != '\0')
 		{
 			if (game->map[i][j] == 'C')
-				mlx_put_image_to_window(game->mlx, game->mlx_window, game->c_image, j * 64, i * 64);
+				mlx_put_image_to_window(game->mlx, game->mlx_window,
+					game->c_image, j * 64, i * 64);
 			else if (game->map[i][j] == 'E')
-				mlx_put_image_to_window(game->mlx, game->mlx_window, game->d_image, j * 64, i * 64);
+				mlx_put_image_to_window(game->mlx, game->mlx_window,
+					game->d_image, j * 64, i * 64);
 			else if (game->map[i][j] == 'P')
-				mlx_put_image_to_window(game->mlx, game->mlx_window, game->p_image, j * 64, i * 64);
+				mlx_put_image_to_window(game->mlx, game->mlx_window,
+					game->p_image, j * 64, i * 64);
 			else if (game->map[i][j] == '1')
-				mlx_put_image_to_window(game->mlx, game->mlx_window, game->w_image, j * 64, i * 64);
+				mlx_put_image_to_window(game->mlx, game->mlx_window,
+					game->w_image, j * 64, i * 64);
 			else if (game->map[i][j] == '0')
-				mlx_put_image_to_window(game->mlx, game->mlx_window, game->f_image, j * 64, i * 64);
+				mlx_put_image_to_window(game->mlx, game->mlx_window,
+					game->f_image, j * 64, i * 64);
 			j++;
 		}
 		i++;
 	}
 }
 
+void	move_player(t_map *game)
+{
+	int future_x;
+	int	future_y;
+
+	future_x = game->x_pos + game->press_x;
+	future_y = game->y_pos + game->press_y;
+	if (game->map[future_y][future_x] != '1')
+	{
+		game->map[game->y_pos][game->x_pos] = '0';
+		game->x_pos = future_x;
+		game->y_pos = future_y;
+		game->map[game->y_pos][game->x_pos] = 'P';
+		display_images(game);
+	}
+}
+
 void	game_load(t_map *game)
 {
 	display_window(game);
-	handle_events(game);
+	mlx_key_hook(game->mlx_window, key_hook, game);
+	mlx_hook(game->mlx_window, 17, 0, close_game, game);
 	init_images(game);
-	display_images(game);
 	mlx_loop(game->mlx);
 }

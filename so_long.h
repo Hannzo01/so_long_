@@ -6,7 +6,7 @@
 /*   By: kemzouri <kemzouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:26:02 by kemzouri          #+#    #+#             */
-/*   Updated: 2025/03/26 20:33:57 by kemzouri         ###   ########.fr       */
+/*   Updated: 2025/03/27 18:20:04 by kemzouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 # define SO_LONG_H
 
 # include "gnl/get_next_line.h"
-# include <stdio.h> 
 # include <mlx.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # define TILE_SIZE 64
+
 typedef struct s_map
 {
 	char	**map;
@@ -46,6 +47,8 @@ typedef struct s_map
 	void	*c_image;
 	int		image_width;
 	int		image_height;
+	int		press_x;
+	int		press_y;
 }			t_map;
 
 int			ft_strln(char *str);
@@ -67,14 +70,15 @@ void		clone_map(t_map *game);
 void		flood_fill(t_map *game, int x, int y);
 int			ff_validity(t_map *game);
 
-
-void	display_window(t_map *game);
-void	game_load(t_map *game);
-void	ft_free(t_map *game);
-void	handle_events(t_map *game);
-void	ft_free_images(t_map *game);
-void	init_images(t_map *game);
-
+void		display_window(t_map *game);
+void		game_load(t_map *game);
+void		ft_free(t_map *game);
+void		handle_events(t_map *game);
+void		ft_free_images(t_map *game);
+void		init_images(t_map *game);
+int			key_hook(int keycode, t_map *game);
+void		move_player(t_map *game);
+int	close_game(t_map *game);
 
 
 
