@@ -12,8 +12,70 @@
 
 #include "so_long.h"
 
+void	init_images(t_map *game)
+{
+	game->image_height = 64;
+	game->image_width = 64;
+	game->p_image = mlx_xpm_file_to_image(game->mlx, "./textures/player.xpm",
+		 &game->image_width, &game->image_height);
+	game->d_image = mlx_xpm_file_to_image(game->mlx, "./textures/door.xpm", &game->image_width, &game->image_height);
+	game->f_image = mlx_xpm_file_to_image(game->mlx, "./textures/floor.xpm", &game->image_width, &game->image_height);
+	game->c_image = mlx_xpm_file_to_image(game->mlx, "./textures/collectibles.xpm", &game->image_width, &game->image_height);
+	game->w_image = mlx_xpm_file_to_image(game->mlx, "./textures/wall.xpm", &game->image_width, &game->image_height);
+    if (game->p_image == NULL || game->d_image == NULL || game->f_image == NULL || 
+        game->c_image == NULL || game->w_image == NULL)
+	{
+		ft_free_images(game);
+		return ;
+	}
+}
+
+void	ft_free_images(t_map *game)
+{
+	if (game->d_image != NULL)
+		mlx_destroy_image(game->mlx, game->d_image);
+	if (game->p_image != NULL)
+		mlx_destroy_image(game->mlx, game->p_image);
+	if (game->f_image != NULL)
+        mlx_destroy_image(game->mlx, game->f_image);
+    if (game->c_image != NULL)
+        mlx_destroy_image(game->mlx, game->c_image);
+    if (game->w_image != NULL)
+        mlx_destroy_image(game->mlx, game->w_image);
+}
+
+void	display_images(t_map *game)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (game->map[i] != NULL)
+	{
+		j = 0;
+		while (game->map[i][j] != '\0')
+		{
+			if (game->map[i][j] == 'C')
+				mlx_put_image_to_window(game->mlx, game->mlx_window, game->c_image, j * 64, i * 64);
+			else if (game->map[i][j] == 'E')
+				mlx_put_image_to_window(game->mlx, game->mlx_window, game->d_image, j * 64, i * 64);
+			else if (game->map[i][j] == 'P')
+				mlx_put_image_to_window(game->mlx, game->mlx_window, game->p_image, j * 64, i * 64);
+			else if (game->map[i][j] == '1')
+				mlx_put_image_to_window(game->mlx, game->mlx_window, game->w_image, j * 64, i * 64);
+			else if (game->map[i][j] == '0')
+				mlx_put_image_to_window(game->mlx, game->mlx_window, game->f_image, j * 64, i * 64);
+			j++;
+		}
+		i++;
+	}
+}
+
 void	game_load(t_map *game)
 {
 	display_window(game);
-	//handle_events(game);
+	handle_events(game);
+	init_images(game);
+	display_images(game);
+	mlx_loop(game->mlx);
 }

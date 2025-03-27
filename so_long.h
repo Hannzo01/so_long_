@@ -15,7 +15,7 @@
 
 # include "gnl/get_next_line.h"
 # include <stdio.h> 
-#	include <mlx.h>
+# include <mlx.h>
 # include <stdlib.h>
 # include <unistd.h>
 # define TILE_SIZE 64
@@ -39,6 +39,13 @@ typedef struct s_map
 	int		win_width;
 	void	*mlx;
 	void	*mlx_window;
+	void	*f_image;
+	void	*d_image;
+	void	*p_image;
+	void	*w_image;
+	void	*c_image;
+	int		image_width;
+	int		image_height;
 }			t_map;
 
 int			ft_strln(char *str);
@@ -65,6 +72,8 @@ void	display_window(t_map *game);
 void	game_load(t_map *game);
 void	ft_free(t_map *game);
 void	handle_events(t_map *game);
+void	ft_free_images(t_map *game);
+void	init_images(t_map *game);
 
 
 

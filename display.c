@@ -30,8 +30,6 @@ void	display_window(t_map *game)
 		ft_free(game);
 		exit(1);
 	}
-	handle_events(game);
-	mlx_loop(game->mlx);
 }
 
 void	ft_free(t_map *game)
@@ -40,10 +38,8 @@ void	ft_free(t_map *game)
 		free_2d_array(game->clone_map);
 	if (game->map)
 		free_2d_array(game->map);
-
 	if (game->mlx_window)
 		mlx_destroy_window(game->mlx, game->mlx_window);
-
 	if (game->mlx)
 		mlx_destroy_display(game->mlx);
 	free(game->mlx);
@@ -54,6 +50,7 @@ int	key_hook(int keycode, t_map *game)
 {
 	if (keycode == 65307)
 	{
+		ft_free_images(game);
 		ft_free(game);
 		exit(0);
 	}
@@ -62,6 +59,7 @@ int	key_hook(int keycode, t_map *game)
 
 int	close_game(t_map *game)
 {
+	ft_free_images(game);
 	ft_free(game);
 	exit(0);
 }
