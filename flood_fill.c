@@ -23,6 +23,15 @@ void	clone_map(t_map *game)
 	while (i < game->height)
 	{
 		game->clone_map[i] = ft_strdup(game->map[i]);
+		if (!game->clone_map[i])
+        {
+            // Cleanup if allocation fails
+            while (i-- > 0)
+                free(game->clone_map[i]);
+            free(game->clone_map);
+            game->clone_map = NULL;
+            return;
+        }
 		i++;
 	}
 	game->clone_map[i] = NULL;
@@ -30,22 +39,26 @@ void	clone_map(t_map *game)
 
 void	flood_fill(t_map *game, int x, int y)
 {
-	if (game->clone_map[x][y] == 'X' || game->clone_map[x][y] == '1')
+	if (x < 0 || y < 0 || x >= game->width || y >= game->height)
+        return;
+	if (game->clone_map[y][x] == 'X' || game->clone_map[y][x] == '1')
 		return ;
-	if (game->clone_map[x][y] == 'C')
+	if (game->clone_map[y][x] == 'C')
 		game->ff_c++;
-	if (game->clone_map[x][y] == 'E')
+	if (game->clone_map[y][x] == 'E')
 		game->ff_e++;
-	game->clone_map[x][y] = 'X';
-	flood_fill(game, x - 1, y);
-	flood_fill(game, x, y - 1);
-	flood_fill(game, x + 1, y);
-	flood_fill(game, x, y + 1);
+	game->clone_map[y][x] = 'X';
+    flood_fill(game, x - 1, y); // Up
+    flood_fill(game, x + 1, y); // Down
+    flood_fill(game, x, y - 1); // Left
+    flood_fill(game, x, y + 1); // Right
 }
 
 int	ff_validity(t_map *game)
 {
 	clone_map(game);
+	if (!game->clone_map)
+        return (ft_putstr_fd("Error\nMap cloning failed!\n", 2), 0);
 	flood_fill(game, game->x_pos, game->y_pos);
 	if (game->collectibles != game->ff_c)
 		return (ft_putstr_fd("Error\nSome 'C' are not reached!\n", 2), 0);

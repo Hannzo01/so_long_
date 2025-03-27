@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "so_long.h"
-#include <string.h> //delete later
 
 int	main(int argc, char *argv[])
 {
@@ -22,7 +21,7 @@ int	main(int argc, char *argv[])
 	if (is_valid_filename(argv[1]) == 0)
 		return (1);
 	game = malloc(sizeof(t_map));
-	memset(game, 0, sizeof(t_map)); // ATTENTION FT_MEMSET NEEDED
+	ft_memset(game, 0, sizeof(t_map)); // ATTENTION FT_MEMSET NEEDED
 	if (game == NULL)
 		return (1);
 	if (calculate_map_height(argv[1]) == 0)

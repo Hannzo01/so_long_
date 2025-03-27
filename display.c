@@ -49,7 +49,7 @@ void	ft_free(t_map *game)
 
 int	key_hook(int keycode, t_map *game)
 {
-	printf("%d\n", keycode);
+
 	if (keycode == 65307)
 	{
 		ft_free_images(game);
@@ -66,8 +66,14 @@ int	key_hook(int keycode, t_map *game)
 		game->press_x = 1;
 	else if (keycode == 115) //s
 		game->press_y = 1;
-	move_player(game);
-	 return (0);
+	if(move_player(game) == 1)
+	{
+		game->move_count++;
+		write(1, "Moves:", 6);
+		ft_putnbr(game->move_count);
+		write(1, "\n", 1);
+	}
+	return (0);
 }
 
 int	close_game(t_map *game)

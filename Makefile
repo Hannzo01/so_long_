@@ -2,7 +2,7 @@ NAME = so_long
 
 SRCS = filename_check.c map_reader.c print_utils.c so_long.c \
 	gnl/get_next_line_utils.c gnl/get_next_line.c map_validation.c \
-	check_map_content.c flood_fill.c display.c game_manager.c 
+	check_map_content.c flood_fill.c display.c game_manager.c utils.c 
 
 OBJS = $(SRCS:.c=.o)
 CC = gcc

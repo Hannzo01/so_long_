@@ -49,6 +49,8 @@ typedef struct s_map
 	int		image_height;
 	int		press_x;
 	int		press_y;
+	int		move_count;
+	int		collected;
 }			t_map;
 
 int			ft_strln(char *str);
@@ -63,7 +65,6 @@ int			check_char(char *str, char c);
 int			is_map_surrounded(t_map *game);
 int			check_map_validity(t_map *game);
 int			is_valid(char **map);
-void		initialize(t_map *game);
 void		count_element(t_map *game);
 int			valid_characters(t_map *game);
 void		clone_map(t_map *game);
@@ -77,8 +78,10 @@ void		handle_events(t_map *game);
 void		ft_free_images(t_map *game);
 void		init_images(t_map *game);
 int			key_hook(int keycode, t_map *game);
-void		move_player(t_map *game);
-int	close_game(t_map *game);
+int		move_player(t_map *game);
+int		close_game(t_map *game);
+void	ft_putnbr(int n);
+void	*ft_memset(void *s, int c, int n);
 
 
 

@@ -81,28 +81,38 @@ void	display_images(t_map *game)
 	}
 }
 
-void	move_player(t_map *game)
+int	move_player(t_map *game)
 {
 	int future_x;
 	int	future_y;
 
 	future_x = game->x_pos + game->press_x;
-	future_y = game->y_pos + game->press_y;
+	future_y = game->y_pos + game->press_y;	
+	if ((game->map[future_y][future_x] != '1') && (game->map[future_y][future_x] == 'E'))
+	{
+		if (game->collectibles == game->collected)
+			exit(1);
+	}
 	if (game->map[future_y][future_x] != '1')
 	{
+		if (game->map[future_y][future_x] == 'C')
+			game->collected++;
 		game->map[game->y_pos][game->x_pos] = '0';
 		game->x_pos = future_x;
 		game->y_pos = future_y;
 		game->map[game->y_pos][game->x_pos] = 'P';
 		display_images(game);
+		return (1);
 	}
+	return (0);
 }
 
 void	game_load(t_map *game)
 {
 	display_window(game);
+	init_images(game);
+	display_images(game);
 	mlx_key_hook(game->mlx_window, key_hook, game);
 	mlx_hook(game->mlx_window, 17, 0, close_game, game);
-	init_images(game);
 	mlx_loop(game->mlx);
 }

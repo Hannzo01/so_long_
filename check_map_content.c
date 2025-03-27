@@ -33,37 +33,30 @@ int	is_valid(char **map)
 	return (0);
 }
 
-void	initialize(t_map *game)
-{
-	game->collectibles = 0;
-	game->p = 0;
-	game->e = 0;
-}
-
 void	count_element(t_map *game)
 {
-	int	i;
-	int	j;
+	int	y;
+	int	x;
 
-	i = 0;
-	while (game->map[i] != NULL)
+	y = 0;
+	while (game->map[y] != NULL)
 	{
-		j = 0;
-		while (game->map[i][j] != '\0')
+		x = 0;
+		while (game->map[y][x] != '\0')
 		{
-			if (game->map[i][j] == 'C')
+			if (game->map[y][x] == 'C')
 				game->collectibles++;
-			else if (game->map[i][j] == 'P')
+			else if (game->map[y][x] == 'P')
 			{
-				game->y_pos = j;
-				game->x_pos = i;
+				game->y_pos = y;
+				game->x_pos = x;
 				game->p++;
 			}
-			else if (game->map[i][j] == 'E')
+			else if (game->map[y][x] == 'E')
 				game->e++;
-			j++;
+			x++;
 		}
-		i++;
+		y++;
 	}
 }
 
@@ -71,7 +64,6 @@ int	valid_characters(t_map *game)
 {
 	if (is_valid(game->map) == 1)
 		return ((ft_putstr_fd("Error\nInvalid char\n", 2), 0));
-	initialize(game);
 	count_element(game);
 	if (game->collectibles < 1)
 		return (ft_putstr_fd("Error\nAt least one collectible is required.\n",
