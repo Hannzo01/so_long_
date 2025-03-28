@@ -6,7 +6,7 @@
 /*   By: kemzouri <kemzouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 15:54:21 by kemzouri          #+#    #+#             */
-/*   Updated: 2025/03/27 18:33:45 by kemzouri         ###   ########.fr       */
+/*   Updated: 2025/03/27 23:58:35 by kemzouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	ft_free(t_map *game)
 
 int	key_hook(int keycode, t_map *game)
 {
-
 	if (keycode == 65307)
 	{
 		ft_free_images(game);
@@ -58,15 +57,16 @@ int	key_hook(int keycode, t_map *game)
 	}
 	game->press_x = 0;
 	game->press_y = 0;
-	if (keycode == 119) //w
+	if (keycode == 119) // w
 		game->press_y = -1;
-	else if (keycode == 97) //a
+	else if (keycode == 97) // a
 		game->press_x = -1;
-	else if (keycode == 100) //d
+	else if (keycode == 100) // d
 		game->press_x = 1;
-	else if (keycode == 115) //s
+	else if (keycode == 115) // s
 		game->press_y = 1;
-	if(move_player(game) == 1)
+	if (move_player(game) == 5 && (keycode == 119 || keycode == 97
+			|| keycode == 100 || keycode == 115))
 	{
 		game->move_count++;
 		write(1, "Moves:", 6);
@@ -82,9 +82,3 @@ int	close_game(t_map *game)
 	ft_free(game);
 	exit(0);
 }
-
-// void	handle_events(t_map *game)
-// {
-// 	mlx_key_hook(game->mlx_window, key_hook, game);
-// 	mlx_hook(game->mlx_window, 17, 0, close_game, game);
-// }

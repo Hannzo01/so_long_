@@ -6,7 +6,7 @@
 /*   By: kemzouri <kemzouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:26:06 by kemzouri          #+#    #+#             */
-/*   Updated: 2025/03/27 14:05:38 by kemzouri         ###   ########.fr       */
+/*   Updated: 2025/03/28 00:11:37 by kemzouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char *argv[])
 	if (is_valid_filename(argv[1]) == 0)
 		return (1);
 	game = malloc(sizeof(t_map));
-	ft_memset(game, 0, sizeof(t_map)); // ATTENTION FT_MEMSET NEEDED
+	ft_memset(game, 0, sizeof(t_map));
 	if (game == NULL)
 		return (1);
 	if (calculate_map_height(argv[1]) == 0)

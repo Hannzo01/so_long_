@@ -6,7 +6,7 @@
 /*   By: kemzouri <kemzouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 15:57:46 by kemzouri          #+#    #+#             */
-/*   Updated: 2025/03/27 18:30:33 by kemzouri         ###   ########.fr       */
+/*   Updated: 2025/03/28 01:48:21 by kemzouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,29 +80,33 @@ void	display_images(t_map *game)
 		i++;
 	}
 }
+void	handle_door(t_map *game)
+{
+	if (game->collected == game->collectibles)
+	{
+		ft_free_images(game);
+		ft_free(game);
+		exit(0);
+	}
+	// handle if the collectible are not collected yet
+}
 
 int	move_player(t_map *game)
 {
-	int future_x;
-	int	future_y;
-
-	future_x = game->x_pos + game->press_x;
-	future_y = game->y_pos + game->press_y;	
-	if ((game->map[future_y][future_x] != '1') && (game->map[future_y][future_x] == 'E'))
+	game->future_x = game->x_pos + game->press_x;
+	game->future_y = game->y_pos + game->press_y;
+	if (game->map[game->future_y][game->future_x] == 'E')
+		handle_door(game);
+	if (game->map[game->future_y][game->future_x] != '1')
 	{
-		if (game->collectibles == game->collected)
-			exit(1);
-	}
-	if (game->map[future_y][future_x] != '1')
-	{
-		if (game->map[future_y][future_x] == 'C')
+		if (game->map[game->future_y][game->future_x] == 'C')
 			game->collected++;
 		game->map[game->y_pos][game->x_pos] = '0';
-		game->x_pos = future_x;
-		game->y_pos = future_y;
+		game->x_pos = game->future_x;
+		game->y_pos = game->future_y;
 		game->map[game->y_pos][game->x_pos] = 'P';
 		display_images(game);
-		return (1);
+		return (5);
 	}
 	return (0);
 }

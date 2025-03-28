@@ -6,7 +6,7 @@
 /*   By: kemzouri <kemzouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:26:02 by kemzouri          #+#    #+#             */
-/*   Updated: 2025/03/27 18:20:04 by kemzouri         ###   ########.fr       */
+/*   Updated: 2025/03/28 01:27:25 by kemzouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,11 @@ typedef struct s_map
 	int		image_height;
 	int		press_x;
 	int		press_y;
+	int		future_x;
+	int		future_y;
 	int		move_count;
 	int		collected;
+	int		door_flag;
 }			t_map;
 
 int			ft_strln(char *str);
@@ -74,15 +77,12 @@ int			ff_validity(t_map *game);
 void		display_window(t_map *game);
 void		game_load(t_map *game);
 void		ft_free(t_map *game);
-void		handle_events(t_map *game);
 void		ft_free_images(t_map *game);
 void		init_images(t_map *game);
 int			key_hook(int keycode, t_map *game);
-int		move_player(t_map *game);
-int		close_game(t_map *game);
-void	ft_putnbr(int n);
-void	*ft_memset(void *s, int c, int n);
-
-
+int			move_player(t_map *game);
+int			close_game(t_map *game);
+void		ft_putnbr(int n);
+void		*ft_memset(void *s, int c, int n);
 
 #endif
