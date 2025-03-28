@@ -6,7 +6,7 @@
 /*   By: kemzouri <kemzouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 23:33:53 by kemzouri          #+#    #+#             */
-/*   Updated: 2025/03/27 23:58:26 by kemzouri         ###   ########.fr       */
+/*   Updated: 2025/03/28 16:30:41 by kemzouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	clone_map(t_map *game)
 		game->clone_map[i] = ft_strdup(game->map[i]);
 		if (!game->clone_map[i])
 		{
-			// Clean if allocation fails
 			while (i-- > 0)
 				free(game->clone_map[i]);
 			free(game->clone_map);

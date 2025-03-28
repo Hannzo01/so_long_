@@ -6,7 +6,7 @@
 /*   By: kemzouri <kemzouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 15:54:21 by kemzouri          #+#    #+#             */
-/*   Updated: 2025/03/27 23:58:35 by kemzouri         ###   ########.fr       */
+/*   Updated: 2025/03/28 16:29:01 by kemzouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,13 @@ int	key_hook(int keycode, t_map *game)
 	}
 	game->press_x = 0;
 	game->press_y = 0;
-	if (keycode == 119) // w
+	if (keycode == 119)
 		game->press_y = -1;
-	else if (keycode == 97) // a
+	else if (keycode == 97)
 		game->press_x = -1;
-	else if (keycode == 100) // d
+	else if (keycode == 100)
 		game->press_x = 1;
-	else if (keycode == 115) // s
+	else if (keycode == 115)
 		game->press_y = 1;
 	if (move_player(game) == 1 && (keycode == 119 || keycode == 97
 			|| keycode == 100 || keycode == 115))
