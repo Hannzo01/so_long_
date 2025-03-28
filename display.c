@@ -65,7 +65,7 @@ int	key_hook(int keycode, t_map *game)
 		game->press_x = 1;
 	else if (keycode == 115) // s
 		game->press_y = 1;
-	if (move_player(game) == 5 && (keycode == 119 || keycode == 97
+	if (move_player(game) == 1 && (keycode == 119 || keycode == 97
 			|| keycode == 100 || keycode == 115))
 	{
 		game->move_count++;

@@ -48,75 +48,86 @@ void	ft_free_images(t_map *game)
 	if (game->w_image != NULL)
 		mlx_destroy_image(game->mlx, game->w_image);
 }
-
 void	display_images(t_map *game)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	while (game->map[i] != NULL)
+	game->i = 0;
+	while (game->map[game->i] != NULL)
 	{
-		j = 0;
-		while (game->map[i][j] != '\0')
-		{
-			if (game->map[i][j] == 'C')
-				mlx_put_image_to_window(game->mlx, game->mlx_window,
-					game->c_image, j * 64, i * 64);
-			else if (game->map[i][j] == 'E')
-				mlx_put_image_to_window(game->mlx, game->mlx_window,
-					game->d_image, j * 64, i * 64);
-			else if (game->map[i][j] == 'P')
-				mlx_put_image_to_window(game->mlx, game->mlx_window,
-					game->p_image, j * 64, i * 64);
-			else if (game->map[i][j] == '1')
-				mlx_put_image_to_window(game->mlx, game->mlx_window,
-					game->w_image, j * 64, i * 64);
-			else if (game->map[i][j] == '0')
-				mlx_put_image_to_window(game->mlx, game->mlx_window,
-					game->f_image, j * 64, i * 64);
-			j++;
-		}
-		i++;
+   		game->j = 0;
+    	while (game->map[game->i][game->j] != '\0')
+   	 	{
+        	if (game->map[game->i][game->j] == 'C')
+            	mlx_put_image_to_window(game->mlx, game->mlx_window,
+                	game->c_image, game->j * 64, game->i * 64);
+        	else if (game->map[game->i][game->j] == 'E')
+            	mlx_put_image_to_window(game->mlx, game->mlx_window,
+                	game->d_image, game->j * 64, game->i * 64);
+        	else if (game->map[game->i][game->j] == 'P')
+           	 	mlx_put_image_to_window(game->mlx, game->mlx_window,
+                	game->p_image, game->j * 64, game->i * 64);
+        	else if (game->map[game->i][game->j] == '1')
+            	mlx_put_image_to_window(game->mlx, game->mlx_window,
+                	game->w_image, game->j * 64, game->i * 64);
+        	else if (game->map[game->i][game->j] == '0')
+            	mlx_put_image_to_window(game->mlx, game->mlx_window,
+                	game->f_image, game->j * 64, game->i * 64);
+        	game->j++;
+    	}
+    game->i++;
 	}
 }
-void	handle_door(t_map *game)
+
+void handle_door(t_map *game)
 {
-	if (game->collected == game->collectibles)
-	{
+    if (game->collected == game->collectibles)
+    {
+		game->move_count++;
+		write(1, "Moves:", 6);
+		ft_putnbr(game->move_count);
+		write(1, "\n", 1);
+        write(1, "You Won!\n", 9);
 		ft_free_images(game);
-		ft_free(game);
-		exit(0);
-	}
-	// handle if the collectible are not collected yet
+        ft_free(game);
+        exit(0);
+    }
+    else
+    {
+        game->door_flag = 1;
+        game->x_door = game->future_x;
+        game->y_door = game->future_y;
+        game->map[game->y_pos][game->x_pos] = '0';
+        game->x_pos = game->future_x;
+        game->y_pos = game->future_y;
+        game->map[game->y_pos][game->x_pos] = 'P';
+        display_images(game);
+    }
 }
 
-int	move_player(t_map *game)
+int move_player(t_map *game)
 {
-	game->future_x = game->x_pos + game->press_x;
-	game->future_y = game->y_pos + game->press_y;
-	if (game->map[game->future_y][game->future_x] == 'E')
-		handle_door(game);
-	if (game->map[game->future_y][game->future_x] != '1')
-	{
-		if (game->map[game->future_y][game->future_x] == 'C')
-			game->collected++;
-		game->map[game->y_pos][game->x_pos] = '0';
-		game->x_pos = game->future_x;
-		game->y_pos = game->future_y;
-		game->map[game->y_pos][game->x_pos] = 'P';
-		display_images(game);
-		return (5);
-	}
-	return (0);
+    game->future_x = game->x_pos + game->press_x;
+    game->future_y = game->y_pos + game->press_y;
+    if (game->map[game->future_y][game->future_x] == '1')
+        return (0);
+    if (game->map[game->future_y][game->future_x] == 'E')
+    {
+        handle_door(game);
+        return (1);
+    }
+    if (game->map[game->future_y][game->future_x] == 'C')
+        game->collected++;
+    if (game->door_flag == 1 &&
+       (game->x_pos == game->x_door && game->y_pos == game->y_door))
+    {
+        game->map[game->y_pos][game->x_pos] = 'E';
+        game->door_flag = 0;
+    }
+    else
+        game->map[game->y_pos][game->x_pos] = '0';
+    game->map[game->future_y][game->future_x] = 'P';
+    game->x_pos = game->future_x;
+    game->y_pos = game->future_y;
+    display_images(game);
+    return (1);
 }
 
-void	game_load(t_map *game)
-{
-	display_window(game);
-	init_images(game);
-	display_images(game);
-	mlx_key_hook(game->mlx_window, key_hook, game);
-	mlx_hook(game->mlx_window, 17, 0, close_game, game);
-	mlx_loop(game->mlx);
-}

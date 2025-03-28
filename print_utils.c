@@ -42,18 +42,6 @@ int	ft_strncmp(char *s1, char *s2, size_t n)
 	return (0);
 }
 
-int	ft_strln(char *str)
-{
-	int	i;
-
-	if (!str)
-		return (-1);
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	return (i);
-}
-
 char	*ft_strdupp(char *s)
 {
 	int		i;

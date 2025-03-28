@@ -54,6 +54,10 @@ typedef struct s_map
 	int		move_count;
 	int		collected;
 	int		door_flag;
+	int		y_door;
+	int		x_door;
+	int		i;
+	int		j;
 }			t_map;
 
 int			ft_strln(char *str);
@@ -84,5 +88,6 @@ int			move_player(t_map *game);
 int			close_game(t_map *game);
 void		ft_putnbr(int n);
 void		*ft_memset(void *s, int c, int n);
-
+void 		find_exit_position(t_map *game);
+void		display_images(t_map *game);
 #endif

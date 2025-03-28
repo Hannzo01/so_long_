@@ -35,6 +35,18 @@ void	ft_putnbr(int n)
 		ft_putchar(n + 48);
 }
 
+int	ft_strln(char *str)
+{
+	int	i;
+
+	if (!str)
+		return (-1);
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
+}
+
 void	*ft_memset(void *s, int c, int n)
 {
 	int				i;
