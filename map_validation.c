@@ -68,7 +68,7 @@ int	is_map_surrounded(t_map *game)
 		j = 0;
 		while (game->map[i][j] != '\0')
 		{
-			if (j == 0 || j == game->len - 1)
+			if (j == 0 || j == game->width - 1)
 			{
 				if (game->map[i][j] != '1')
 					return (ft_putstr_fd("Error\nMap with walls error!\n", 2),
