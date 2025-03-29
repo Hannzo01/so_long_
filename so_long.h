@@ -15,7 +15,6 @@
 
 # include "gnl/get_next_line.h"
 # include <mlx.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # define TILE_SIZE 64
