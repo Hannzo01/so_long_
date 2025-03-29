@@ -24,8 +24,6 @@ typedef struct s_map
 {
 	char	**map;
 	char	**clone_map;
-	int		x;
-	int		y;
 	int		height;
 	int		width;
 	int		len;
